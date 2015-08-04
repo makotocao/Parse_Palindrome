@@ -4,6 +4,7 @@ import java.util.*;
 
 class ParsePalindrome{
 
+	//Test whether inputs are confined to constraints.
 	private static boolean testBoth(List<String> strs, List<String> intes){
 
 		if (strs.size() != intes.size()){
@@ -24,7 +25,7 @@ class ParsePalindrome{
 		return true;
 	}
 
-
+	//Check whether a string itself is Palindrome.
 	private static boolean checkPalindrome(String str){
 
 		String reverse = new StringBuffer(str).reverse().toString();
@@ -41,10 +42,10 @@ class ParsePalindrome{
         	BufferedReader in = new BufferedReader( 
             		new InputStreamReader(System.in));
 
-        	String str;
-		String inte;
-		List<String> strs;
-		List<String> intes;
+        	String str; //Get string input.
+		String inte; //Get number input.
+		List<String> strs; //Explode whole string into each element.
+		List<String> intes; //Like above.
 
 
 		int flagOut = 0;
@@ -91,11 +92,11 @@ class ParsePalindrome{
 
 /*----------------------------------------------------------------------------------------*/
 
-		List<String> frontNonPalindrome = new ArrayList<>();
-		List<String> backNonPalindrome = new ArrayList<>();
+		List<String> frontNonPalindrome = new ArrayList<>(); //Get string that is not Palindrome.
+		List<String> backNonPalindrome = new ArrayList<>(); //Get the corresponding number.
 
-		List<String> frontPalindrome = new ArrayList<>();
-		List<String> backPalindrome = new ArrayList<>();
+		List<String> frontPalindrome = new ArrayList<>(); //Get string that is Palindrome.
+		List<String> backPalindrome = new ArrayList<>(); //Get the corresponding number.
 
 //Divide input into two categories
 
@@ -135,7 +136,9 @@ class ParsePalindrome{
 
 			}
 
-
+			//If a Palindrome has an even number of occurrence, they can contribute to the max Palindrome. 
+			//Otherwise, only the Palindrome has largest sum of backside number can be added for odd number times, and the rest can only appear even number times.
+			//So we need to eliminate the min one of the rest of Palindrome with odd number occurrence. 
 			List<Integer> oddMin = new ArrayList<>();
 
 
@@ -201,15 +204,19 @@ class ParsePalindrome{
 
 			for (String key : cisCopy.keySet()){
 
+				//Get number of occurrence
 				int C = cis.get(key);
 				int T = trans.get(key);
+
 				String reverse = new StringBuffer(key).reverse().toString();
 
+				//If the reverse never occurs, the string cannot contribute to the max Palindrome, hence eliminated.
 				if (T == 0){
 					cis.remove(key);
 					trans.remove(key);
 				}
 
+				//Always make the element in cis has no less occurence than its reverse in trans.
 				else if (C < T){
 
 					cis.put(reverse, T);
